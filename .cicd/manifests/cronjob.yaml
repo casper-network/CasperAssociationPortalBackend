@@ -1,0 +1,32 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: {{.Values.namespace}}
+  name: {{.Values.appName}}-{{.Values.envName}}-cron
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 120
+  failedJobsHistoryLimit: 30
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{.Values.appName}}-{{.Values.envName}}-cron
+            image: {{.Values.artifactImage}}
+            args:
+            - /bin/sh
+            - -c
+            - php /app/crontab/cron.php
+            envFrom:
+            - configMapRef:
+                name: {{.Values.appName}}-{{.Values.envName}}-config
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "100Mi"
+              limits:
+                cpu: "200m"
+                memory: "200Mi"
+          restartPolicy: Never
