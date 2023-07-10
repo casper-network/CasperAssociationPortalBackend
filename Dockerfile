@@ -32,8 +32,9 @@ RUN sed -i 's/;extension=gd/extension=gd/' /etc/php81/php.ini \
   && sed -i 's/;extension=sqlite3/extension=sqlite3/' /etc/php81/php.ini \
   && sed -i 's/;extension=gmp/extension=gmp/' /etc/php81/php.ini \
   && sed -i 's/;extension=bcmath/extension=bcmath/' /etc/php81/php.ini \
-  && chmod -R 755 . \
-  && chown -R nginx:nginx .
+  && chmod -R 775 . \
+  && chown -R nginx:nginx . \
+  && addgroup nobody nginx
 
 USER nobody
 
