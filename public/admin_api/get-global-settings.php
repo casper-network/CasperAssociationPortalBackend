@@ -18,14 +18,13 @@ class AdminGetGlobalSettings extends Endpoints {
 		$admin_guid = $auth['guid'] ?? '';
 
 		// uptime
-		$uptime_calc_size         = $helper->fetch_setting('uptime_calc_size');
 		$uptime_warning           = $helper->fetch_setting('uptime_warning');
 		$uptime_probation         = $helper->fetch_setting('uptime_probation');
 		$uptime_correction_units  = $helper->fetch_setting('uptime_correction_units');
 		$uptime_correction_metric = $helper->fetch_setting('uptime_correction_metric');
 
 		// voting lock
-		$minimum_eras       = $helper->fetch_setting('minimum_eras');
+		$eras_required_to_vote    = $helper->fetch_setting('eras_required_to_vote');
 		$eras_since_redmark = $helper->fetch_setting('eras_since_redmark');
 
 		// redmarks
@@ -48,13 +47,12 @@ class AdminGetGlobalSettings extends Endpoints {
 		_exit(
 			'success',
 			array(
-				'uptime_calc_size'         => $uptime_calc_size,
 				'uptime_warning'           => $uptime_warning,
 				'uptime_probation'         => $uptime_probation,
 				'uptime_correction_units'  => $uptime_correction_units,
 				'uptime_correction_metric' => $uptime_correction_metric,
 
-				'minimum_eras'             => $minimum_eras,
+				'eras_required_to_vote'    => $eras_required_to_vote,
 				'eras_since_redmark'       => $eras_since_redmark,
 
 				'redmark_revoke'           => $redmark_revoke,

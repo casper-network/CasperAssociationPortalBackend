@@ -56,7 +56,8 @@ class UserGetMyEras extends Endpoints {
 			a.in_current_era,
 			a.in_auction,
 			a.bid_inactive,
-			a.uptime
+			a.uptime,
+			a.current_era_weight
 			FROM  all_node_data AS a
 			JOIN  user_nodes    AS b
 			ON    a.public_key  = b.public_key
@@ -66,8 +67,14 @@ class UserGetMyEras extends Endpoints {
 			ORDER BY a.era_id DESC
 		");
 
-		$eras = $eras ?? array();
+		$eras        = $eras ?? array();
 		$sorted_eras = array();
+
+		$mbs = (int)($db->do_select("
+			SELECT mbs
+			FROM  mbs
+			WHERE era_id = $era_minus_360
+		")[0]['mbs'] ?? 0);
 
 		// for each node address's era
 		foreach ($eras as $era) {
@@ -78,6 +85,8 @@ class UserGetMyEras extends Endpoints {
 			$era_start_time1 = $era_start_time[0] ?? '';
 			$era_start_time2 = $era_start_time[1] ?? '';
 
+			$current_era_weight = $era['current_era_weight'] ?? 0;
+
 			if (!isset($sorted_eras['#'.$era_id])) {
 				$sorted_eras['#'.$era_id] = array(
 					"era_start_time1"  => $era_start_time1,
@@ -86,9 +95,21 @@ class UserGetMyEras extends Endpoints {
 				);
 			}
 
+			$in_pool = (bool)((int)($era['in_current_era']) && !(int)($era['bid_inactive']));
+
+			if (
+				!$in_pool &&
+				$current_era_weight > $mbs
+			) {
+				$redmark_era = true;
+			} else {
+				$redmark_era = false;
+			}
+
 			$sorted_eras['#'.$era_id]["addresses"][$public_key] = [
-				"in_pool" => (int)($era['in_current_era']) && !(int)($era['bid_inactive']),
-				"rewards" => round($era['uptime'], 3)
+				"in_pool"     => $in_pool,
+				"rewards"     => round($era['uptime'], 3),
+				"redmark_era" => $redmark_era
 			];
 		}
 
