@@ -39,3 +39,4 @@ data:
   HELLOSIGN_API_KEY: {{.Values.hellosignApiKey}}
   INTEGRATION_TEST_EMAIL: {{.Values.integrationTestEmail}}
   INTEGRATION_TEST_PASSWORD: {{.Values.integrationTestPassword}}
+  DOCKER_BUILD: {{.Values.dockerBuild}}

@@ -44,3 +44,4 @@ hellosignClientId: <+serviceVariables.hellosignClientId>
 hellosignApiKey: <+serviceVariables.hellosignApiKey>
 integrationTestEmail: <+serviceVariables.integrationTestEmail>
 integrationTestPassword: <+serviceVariables.integrationTestPassword>
+dockerBuild: <+serviceVariables.dockerBuild>
