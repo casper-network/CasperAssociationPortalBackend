@@ -138,18 +138,27 @@ foreach ($nodes as $node) {
 			AND   era_id     = $current_era_id
 		");
 
-		// insert into suspensions
-		$db->do_query("
-			INSERT INTO suspensions (
-				guid,
-				created_at,
-				reason
-			) VALUES (
-				'$guid',
-				'$now',
-				'redmarks'
-			)
+		// check and insert suspension
+		$sus_check = $db->do_select("
+			SELECT guid
+			FROM  suspensions
+			WHERE guid       = '$guid'
+			AND   reinstated = 0
 		");
+
+		if (!$sus_check) {
+			$db->do_query("
+				INSERT INTO suspensions (
+					guid,
+					created_at,
+					reason
+				) VALUES (
+					'$guid',
+					'$now',
+					'redmarks'
+				)
+			");
+		}
 		continue;
 	}
 
@@ -170,7 +179,8 @@ foreach ($nodes as $node) {
 		// clear pre-existing warning_notifications
 		$db->do_query("
 			DELETE FROM warning_notifications
-			WHERE guid = '$guid'
+			WHERE guid       = '$guid'
+			AND   public_key = '$public_key'
 		");
 
 		// clear pre-existing probations
@@ -202,16 +212,19 @@ foreach ($nodes as $node) {
 		$notified = $db->do_select("
 			SELECT *
 			FROM  warning_notifications
-			WHERE guid = '$guid'
+			WHERE guid       = '$guid'
+			AND   public_key = '$public_key'
 		");
 
 		if (!$notified) {
 			$db->do_query("
 				INSERT INTO warning_notifications (
 					guid,
+					public_key,
 					sent_at
 				) VALUES (
 					'$guid',
+					'$public_key',
 					'$now'
 				)
 			");
@@ -316,18 +329,27 @@ foreach ($nodes as $node) {
 					AND   era_id     = $current_era_id
 				");
 
-				// insert into suspensions
-				$db->do_query("
-					INSERT INTO suspensions (
-						guid,
-						created_at,
-						reason
-					) VALUES (
-						'$guid',
-						'$now',
-						'uptime'
-					)
+				// check and insert suspension
+				$sus_check = $db->do_select("
+					SELECT guid
+					FROM  suspensions
+					WHERE guid       = '$guid'
+					AND   reinstated = 0
 				");
+
+				if (!$sus_check) {
+					$db->do_query("
+						INSERT INTO suspensions (
+							guid,
+							created_at,
+							reason
+						) VALUES (
+							'$guid',
+							'$now',
+							'uptime'
+						)
+					");
+				}
 				continue;
 			}
 
