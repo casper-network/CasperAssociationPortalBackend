@@ -20,7 +20,7 @@
     "phpoffice/phpspreadsheet": "^1.17",
     "aws/aws-sdk-php": "^3.87",
     "phpgangsta/googleauthenticator": "dev-master",
-    "stripe/stripe-php": "^9.5",
+    "stripe/stripe-php": "^12.4",
     "hellosign/hellosign-php-sdk": "^3.8",
     "phpseclib/phpseclib": "^3.0"
   },
