@@ -123,13 +123,13 @@ class UserRegister extends Endpoints {
 		}
 
 		if (
-			strlen($password) < 8 ||
+			strlen($password) < 10 ||
 			!preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', $password) ||
 			!preg_match('/[0-9]/', $password)
 		) {
 			_exit(
 				'error',
-				'Password must be at least 8 characters long, contain at least one (1) number, and one (1) special character',
+				'Password must be at least 10 characters long, contain at least one (1) number, and one (1) special character',
 				400,
 				'Invalid password. Does not meet complexity requirements'
 			);

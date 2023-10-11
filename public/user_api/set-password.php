@@ -23,13 +23,13 @@ class UserSetPassword extends Endpoints {
 
 		if (
 			!$new_password ||
-			strlen($new_password) < 8 ||
+			strlen($new_password) < 10 ||
 			!preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', $new_password) ||
 			!preg_match('/[0-9]/', $new_password)
 		) {
 			_exit(
 				'error',
-				'Invalid new password. Must be at least 8 characters long, contain at least one (1) special character, and one (1) number',
+				'Invalid new password. Must be at least 10 characters long, contain at least one (1) special character, and one (1) number',
 				400,
 				'Invalid new password. Failed complexity requirements'
 			);

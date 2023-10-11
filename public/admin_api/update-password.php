@@ -26,13 +26,13 @@ class AdminUpdatePassword extends Endpoints {
 		$new_password_hash = hash('sha256', $new_password);
 
 		if(
-			strlen($new_password) < 8 ||
+			strlen($new_password) < 10 ||
 			!preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', $new_password) ||
 			!preg_match('/[0-9]/', $new_password)
 		) {
 			_exit(
 				'error',
-				'Password must be at least 8 characters long, contain at least one (1) number, and one (1) special character',
+				'Password must be at least 10 characters long, contain at least one (1) number, and one (1) special character',
 				400,
 				'Invalid password. Does not meet complexity requirements'
 			);
