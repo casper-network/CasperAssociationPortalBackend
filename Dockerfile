@@ -21,8 +21,7 @@ COPY --chown=nginx config/default.conf /etc/nginx/conf.d/default.conf
 RUN apk add --no-cache gcompat=1.1.0-r0 php81-gd php81-zip php81-mysqli php81-sqlite3 php81-gmp php81-bcmath \
   && rm -rf /var/www/html \
   && rm -rf /var/cache/apk/* \
-  && mkdir -p /app \
-  && chown -R nginx:nginx /app
+  && chown -R nginx:nginx /app /var/lib/nginx /run
 
 COPY --chown=nginx --from=build-php /app .
 
@@ -30,8 +29,8 @@ RUN sed -i 's/;extension=zip/extension=zip/' /etc/php81/php.ini \
   && sed -i 's/;extension=bcmath/extension=bcmath/' /etc/php81/php.ini \
   && chmod -R 775 . \
   && chown -R nginx:nginx . \
-  && addgroup nobody nginx
-
-USER nobody
+  && chown -R nginx:nginx /var/log/nginx
 
 EXPOSE 80
+
+USER nginx
