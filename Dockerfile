@@ -26,11 +26,7 @@ RUN apk add --no-cache gcompat=1.1.0-r0 php81-gd php81-zip php81-mysqli php81-sq
 
 COPY --chown=nginx --from=build-php /app .
 
-RUN sed -i 's/;extension=gd/extension=gd/' /etc/php81/php.ini \
-  && sed -i 's/;extension=zip/extension=zip/' /etc/php81/php.ini \
-  && sed -i 's/;extension=mysqli/extension=mysqli/' /etc/php81/php.ini \
-  && sed -i 's/;extension=sqlite3/extension=sqlite3/' /etc/php81/php.ini \
-  && sed -i 's/;extension=gmp/extension=gmp/' /etc/php81/php.ini \
+RUN sed -i 's/;extension=zip/extension=zip/' /etc/php81/php.ini \
   && sed -i 's/;extension=bcmath/extension=bcmath/' /etc/php81/php.ini \
   && chmod -R 775 . \
   && chown -R nginx:nginx . \
