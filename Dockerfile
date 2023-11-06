@@ -6,7 +6,7 @@ COPY . ./
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/download/2.0.2/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions \
-  && install-php-extensions gd \
+  && install-php-extensions gd gmp mysqli \
   && composer install --optimize-autoloader --no-interaction --no-progress --no-ansi \
   && composer dump-autoload --optimize
 
@@ -18,7 +18,7 @@ WORKDIR /app
 
 COPY --chown=nginx config/default.conf /etc/nginx/conf.d/default.conf
 
-RUN apk add --no-cache gcompat=1.1.0-r0 php81-gd php81-zip php81-mysqli php81-sqlite3 php81-gmp php81-bcmath \
+RUN apk add --no-cache gcompat=1.1.0-r0 php81-zip php81-mysqli php81-bcmath php81-gmp php81-sqlite3 \
   && rm -rf /var/www/html \
   && rm -rf /var/cache/apk/* \
   && chown -R nginx:nginx /app /var/lib/nginx /run
