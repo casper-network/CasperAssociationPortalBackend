@@ -29,7 +29,8 @@ RUN sed -i 's/;extension=zip/extension=zip/' /etc/php81/php.ini \
   && sed -i 's/;extension=bcmath/extension=bcmath/' /etc/php81/php.ini \
   && chmod -R 775 . \
   && chown -R nginx:nginx . \
-  && chown -R nginx:nginx /var/log/nginx
+  && chown -R nginx:nginx /var/log/nginx \
+  && addgroup nobody nginx
 
 USER nobody
 
