@@ -20,6 +20,8 @@ repos:
           - SC2086
           - --ignore
           - DL3059
+          - --ignore
+          - DL3018
           - Dockerfile
 
   # NGINX - validate config

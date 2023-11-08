@@ -3,7 +3,7 @@
 envName: <+env.name>
 appName: <+service.name>
 artifactImage: <+artifact.image> # from Harness Service Primary Artifact
-containerPort: 80
+containerPort: 8090
 servicePort: 80
 namespace: <+service.name>-<+env.name>
 ingressDomainName: <+serviceVariables.ingressDomainName>
