@@ -31,6 +31,9 @@ RUN sed -i 's/;extension=zip/extension=zip/' /etc/php81/php.ini \
   && chown -R nginx:nginx . \
   && chown -R nginx:nginx /var/log/nginx
 
-EXPOSE 80
+USER nobody
 
-USER nginx
+# Healthcheck NGINX is running
+HEALTHCHECK --interval=5s --timeout=3s --start-period=5s --retries=3 CMD curl --fail http://localhost:8090/ || exit 1
+
+EXPOSE 8090
