@@ -1148,7 +1148,7 @@ class DB {
 					),
 					"created_at"  => array(
 						"type"    => "timestamp",
-						"default" => "DEFAULT NULL"
+						"default" => "NULL DEFAULT NULL"
 					),
 					"accepted_at" => array(
 						"type"    => "timestamp",
@@ -1156,7 +1156,7 @@ class DB {
 					),
 					"confirmation_code" => array(
 						"type"    => "varchar(64)",
-						"default" => "NULL DEFAULT NULL"
+						"default" => "DEFAULT NULL"
 					)
 				),
 				"primary"         => "email",
