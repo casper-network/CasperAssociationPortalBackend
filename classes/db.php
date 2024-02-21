@@ -1152,11 +1152,11 @@ class DB {
 					),
 					"accepted_at" => array(
 						"type"    => "timestamp",
-						"default" => "DEFAULT NULL"
+						"default" => "NULL DEFAULT NULL"
 					),
 					"confirmation_code" => array(
 						"type"    => "varchar(64)",
-						"default" => "DEFAULT NULL"
+						"default" => "NULL DEFAULT NULL"
 					)
 				),
 				"primary"         => "email",
